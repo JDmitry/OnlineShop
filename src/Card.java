@@ -1,7 +1,6 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Card {
-
-    ArrayList<Item> items = new ArrayList<>();
-
+    List<ItemCart> items = new ArrayList<>();
 }

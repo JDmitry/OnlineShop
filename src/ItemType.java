@@ -12,13 +12,11 @@ public enum ItemType {
     }
 
      public static ItemType getProductType(String productCode) {
-
         for (int i=0; i<values().length; i++){
             if(productCode.equals(ItemType.values()[i].productCode)){
                 return ItemType.values()[i];
             }
         }
-
         return  null;
     }
 }

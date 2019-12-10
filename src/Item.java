@@ -1,9 +1,9 @@
 public class Item {
-
     private long itemId;
     private double price;
     private String name;
     private ItemType type;
+    private long positionId;
 
     public Item(long itemId, double price, String name, String code) {
         this.itemId = itemId;
@@ -50,6 +50,14 @@ public class Item {
 
     public void setType(ItemType type) {
         this.type = type;
+    }
+
+    public long getPositionId() {
+        return positionId;
+    }
+
+    public void setPositionId(long positionId) {
+        this.positionId = positionId;
     }
 
     @Override

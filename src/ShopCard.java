@@ -1,81 +1,58 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ShopCard {
-
     Store store = new Store();
+    UserDataBase userDB = new UserDataBase();
 
-    ArrayList<User> users = new ArrayList<>();
 
-    HashMap<Long, Card> userCart = new HashMap<>();
-
-    public ShopCard() {
-
-       initData();
-    }
-
-    public void initData()  {
-
-        try( BufferedReader scanner = new BufferedReader((new FileReader("res/users.txt")))) {
-            String currentLine;
-
-            while ((currentLine = scanner.readLine()) != null){
-                String[] userData = currentLine.split("# ");
-                users.add(new User(Integer.parseInt(userData[0]),userData[1], userData[2]));
-                createCart(Integer.parseInt(userData[0]));
-            }
-
-        }catch (IOException e) {
-
-            System.out.println("Error!");;
-        }
-    }
-
-    public void createCart(long userId) {
-
-        userCart.put(userId, new Card());
-    }
-
-    public void addItem(long userId, String code, String name) {
-
-        if (!userCart.containsKey(userId)) {
-            userCart.put(userId, new Card());
-        }
-
-        for(int i=0; i<store.products.size();i++) {
-
-            if((store.products.get(i).getType() == ItemType.getProductType(code)) && (store.products.get(i).getName().equals(name))) {
-                userCart.get(userId).items.add(store.products.get(i));
+    public void addItem(long userId, long itemId) {
+        for (int i = 0; i < userDB.users.size(); i++) {
+            for (int j = 0; j < store.products.size(); j++){
+                if(userDB.users.get(i).getId() == userId && store.products.get(j).getId()==itemId){
+                    userDB.userCard.get(userDB.users.get((i))).items.add(new ItemCart(store.products.get(j)));
+                }
             }
         }
     }
 
-    public void removeItem(long userId, String name) {
-
-        for (int i=0; i<userCart.get(userId).items.size(); i++) {
-
-            if(userCart.get(userId).items.get(i).getName().equals(name)) {
-                userCart.get(userId).items.remove(i);
-            }
+    public void removeItem(long positionId) {
+        for (int i = 0; i < userDB.users.size(); i++) {
+           for (int j = 0; j < userDB.userCard.get(userDB.users.get(i)).items.size(); j++) {
+               if( userDB.userCard.get(userDB.users.get(i)).items.get(j).getPositionId() == positionId) {
+                   userDB.userCard.get(userDB.users.get(i)).items.remove(j);
+               }
+           }
         }
+    }
+
+    public void removeAll(String name) {
+        for (int i = 0; i < userDB.users.size(); i++) {
+           for (int j = 0; j < userDB.userCard.get(userDB.users.get(i)).items.size(); j++){
+               if (setRegEx(name)) {
+                   userDB.userCard.get(userDB.users.get(i)).items.remove(j);
+                   break;
+               }
+           }
+       }
+    }
+
+    public boolean setRegEx(String name){
+        Pattern pattern = Pattern.compile("[A-Z]{0,1}[a-z]{1,10}\\s{0,1}[a-z]{1,10}");
+        Matcher matcher = pattern.matcher(name);
+        return matcher.matches();
     }
 
     public void displayAllUsers() {
-
-        System.out.println("------All Users------");
-        for (int i=0; i<users.size(); i++) {
-
-            System.out.println(users.get(i));
+        System.out.println("-----------All Users------------");
+        for (int i=0; i<userDB.users.size(); i++) {
+            System.out.println(userDB.users.get(i));
         }
         System.out.println();
     }
 
     public void displayAllProducts() {
-        System.out.println("-----All Products----");
-
+        System.out.println("-----------All Products----------");
         for(int i=0; i<store.products.size(); i++) {
             System.out.println(store.products.get(i));
         }
@@ -83,46 +60,25 @@ public class ShopCard {
     }
 
     public void displayUser(long userId) {
-
-          for (int i = 0; i < users.size(); i++) {
-            if(users.get(i).getId() == userId) {
-                System.out.println(users.get(i).toString() + "\n----------------\n");
+        for (int i = 0; i < userDB.users.size(); i++) {
+            if(userDB.users.get(i).getId() == userId) {
+                System.out.println(userDB.users.get(i).toString() + "\n----------------\n");
                 break;
             }
         }
-
-        displayCart(userId);
+        displayCard(userId);
     }
 
-    public void displayCart(long userId) {
-
-        if (!userCart.containsKey(userId)) {
-            System.out.println("The cart is empty!");
-        }else{
-            for(int i=0; i < userCart.get(userId).items.size(); i++) {
-                System.out.println(userCart.get(userId).items.get(i).toString());
+    public void displayCard(long userId) {
+        for (int i=0; i<userDB.users.size(); i++) {
+            if(userDB.users.get(i).getId()==userId) {
+                for (int j=0; j<userDB.userCard.get(userDB.users.get(i)).items.size(); j++){
+                    System.out.println(userDB.userCard.get(userDB.users.get(i)).items.get(j).toString() + " "
+                            + userDB.userCard.get(userDB.users.get(i)).items.get(j).getItem().toString());
+                }
             }
-            System.out.println("-------------------");
         }
+        System.out.println("******************************************************");
     }
-
-    //Deprecated methods
-    /*public void addInToCart(long userId, long itemId) {
-
-        if (!userCart.containsKey(userId)) {
-            userCart.put(userId, new Card());
-        }
-
-        for(int i=0; i<store.products.size();i++) {
-            if(store.products.get(i).getId()==itemId){
-                userCart.get(userId).items.add(store.products.get(i));
-            }
-        }
-    }*/
-
-    /*public void createUser(long userId, String firstName, String lastName) {
-         users.add(new User(userId, firstName, lastName));
-         createCart(userId);
-    }*/
 }
 
