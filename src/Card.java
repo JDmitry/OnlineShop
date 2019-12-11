@@ -2,5 +2,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Card {
-    List<ItemCart> items = new ArrayList<>();
+    private List<ItemCart> items = new ArrayList<>();
+
+    public List<ItemCart> getItems() {
+        return items;
+    }
 }

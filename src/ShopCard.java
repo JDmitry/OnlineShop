@@ -7,30 +7,30 @@ public class ShopCard {
 
 
     public void addItem(long userId, long itemId) {
-        for (int i = 0; i < userDB.users.size(); i++) {
-            for (int j = 0; j < store.products.size(); j++){
-                if(userDB.users.get(i).getId() == userId && store.products.get(j).getId()==itemId){
-                    userDB.userCard.get(userDB.users.get((i))).items.add(new ItemCart(store.products.get(j)));
+        for (int i = 0; i < userDB.getUsers().size(); i++) {
+            for (int j = 0; j < store.getProducts().size(); j++){
+                if(userDB.getUsers().get(i).getId() == userId && store.getProducts().get(j).getId()==itemId){
+                    userDB.getUserCard().get(userDB.getUsers().get((i))).getItems().add(new ItemCart(store.getProducts().get(j)));
                 }
             }
         }
     }
 
     public void removeItem(long positionId) {
-        for (int i = 0; i < userDB.users.size(); i++) {
-           for (int j = 0; j < userDB.userCard.get(userDB.users.get(i)).items.size(); j++) {
-               if( userDB.userCard.get(userDB.users.get(i)).items.get(j).getPositionId() == positionId) {
-                   userDB.userCard.get(userDB.users.get(i)).items.remove(j);
+        for (int i = 0; i < userDB.getUsers().size(); i++) {
+           for (int j = 0; j < userDB.getUserCard().get(userDB.getUsers().get(i)).getItems().size(); j++) {
+               if( userDB.getUserCard().get(userDB.getUsers().get(i)).getItems().get(j).getPositionId() == positionId) {
+                   userDB.getUserCard().get(userDB.getUsers().get(i)).getItems().remove(j);
                }
            }
         }
     }
 
     public void removeAll(String name) {
-        for (int i = 0; i < userDB.users.size(); i++) {
-           for (int j = 0; j < userDB.userCard.get(userDB.users.get(i)).items.size(); j++){
+        for (int i = 0; i < userDB.getUsers().size(); i++) {
+           for (int j = 0; j < userDB.getUserCard().get(userDB.getUsers().get(i)).getItems().size(); j++){
                if (setRegEx(name)) {
-                   userDB.userCard.get(userDB.users.get(i)).items.remove(j);
+                   userDB.getUserCard().get(userDB.getUsers().get(i)).getItems().remove(j);
                    break;
                }
            }
@@ -45,24 +45,24 @@ public class ShopCard {
 
     public void displayAllUsers() {
         System.out.println("-----------All Users------------");
-        for (int i=0; i<userDB.users.size(); i++) {
-            System.out.println(userDB.users.get(i));
+        for (int i=0; i<userDB.getUsers().size(); i++) {
+            System.out.println(userDB.getUsers().get(i));
         }
         System.out.println();
     }
 
     public void displayAllProducts() {
         System.out.println("-----------All Products----------");
-        for(int i=0; i<store.products.size(); i++) {
-            System.out.println(store.products.get(i));
+        for(int i=0; i<store.getProducts().size(); i++) {
+            System.out.println(store.getProducts().get(i));
         }
         System.out.println();
     }
 
     public void displayUser(long userId) {
-        for (int i = 0; i < userDB.users.size(); i++) {
-            if(userDB.users.get(i).getId() == userId) {
-                System.out.println(userDB.users.get(i).toString() + "\n----------------\n");
+        for (int i = 0; i < userDB.getUsers().size(); i++) {
+            if(userDB.getUsers().get(i).getId() == userId) {
+                System.out.println(userDB.getUsers().get(i).toString() + "\n----------------\n");
                 break;
             }
         }
@@ -70,11 +70,11 @@ public class ShopCard {
     }
 
     public void displayCard(long userId) {
-        for (int i=0; i<userDB.users.size(); i++) {
-            if(userDB.users.get(i).getId()==userId) {
-                for (int j=0; j<userDB.userCard.get(userDB.users.get(i)).items.size(); j++){
-                    System.out.println(userDB.userCard.get(userDB.users.get(i)).items.get(j).toString() + " "
-                            + userDB.userCard.get(userDB.users.get(i)).items.get(j).getItem().toString());
+        for (int i=0; i<userDB.getUsers().size(); i++) {
+            if(userDB.getUsers().get(i).getId()==userId) {
+                for (int j=0; j<userDB.getUserCard().get(userDB.getUsers().get(i)).getItems().size(); j++){
+                    System.out.println(userDB.getUserCard().get(userDB.getUsers().get(i)).getItems().get(j).toString() + " "
+                            + userDB.getUserCard().get(userDB.getUsers().get(i)).getItems().get(j).getItem().toString());
                 }
             }
         }

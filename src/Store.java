@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Store {
-    List<Item> products = new ArrayList<>();
+    private List<Item> products = new ArrayList<>();
 
     public Store(){
         initData();
@@ -21,5 +21,9 @@ public class Store {
         } catch (IOException e) {
             System.out.println("This file doesn't exist");
         }
+    }
+
+    public List<Item> getProducts() {
+        return products;
     }
 }
