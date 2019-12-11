@@ -18,10 +18,14 @@ public class Main {
 
         shopCard.addItem(4,1);
         shopCard.addItem(4,2);
+        shopCard.addItem(4,2);
+        shopCard.addItem(4,2);
         shopCard.addItem(4,7);
 
         shopCard.addItem(5,1);
         shopCard.addItem(5,2);
+        shopCard.addItem(5,7);
+        shopCard.addItem(5,7);
         shopCard.addItem(5,7);
 
         shopCard.displayUser(1);
@@ -30,13 +34,29 @@ public class Main {
         shopCard.displayUser(4);
         shopCard.displayUser(5);
 
-        System.out.println(".....................Removing......................\n");
+        System.out.println("................CheckExceptions.............\n");
 
-        shopCard.removeItem(1);
-        shopCard.removeItem(4);
-        shopCard.removeItem(7);
-        shopCard.removeItem(9);
-        shopCard.removeItem(12);
+        shopCard.addItem(6,2);
+        shopCard.addItem(-5,2);
+        shopCard.addItem(4,-10);
+        shopCard.addItem(2,30);
+
+        shopCard.removeItem(100,2);
+        shopCard.removeItem(-120,5);
+
+        shopCard.removeAll(300,"Iphone");
+        shopCard.removeAll(-290,"Fairy tales");
+
+        shopCard.displayUser(2000);
+        shopCard.displayUser(-33434);
+
+        System.out.println("..............Removing................\n");
+
+        shopCard.removeItem(1,1);
+        shopCard.removeItem(2,4);
+        shopCard.removeItem(3,7);
+        shopCard.removeItem(4,9);
+        shopCard.removeItem(5,12);
 
         shopCard.displayUser(1);
         shopCard.displayUser(2);
@@ -46,8 +66,8 @@ public class Main {
 
         System.out.println(".....................RemovingAll......................\n");
 
-        shopCard.removeAll("Rd pel");
-        shopCard.removeAll("phon");
+        shopCard.removeAll(4,"Black pecil");
+        shopCard.removeAll(5,"Ipone");
 
         shopCard.displayUser(1);
         shopCard.displayUser(2);
