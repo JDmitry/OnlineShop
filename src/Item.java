@@ -3,7 +3,7 @@ public class Item {
     private double price;
     private String name;
     private ItemType type;
-    private long positionId;
+
 
     public Item(long itemId, double price, String name, String code) {
         this.itemId = itemId;

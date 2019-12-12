@@ -42,7 +42,7 @@ public class Main {
         shopCard.addItem(2,30);
 
         shopCard.removeItem(100,2);
-        shopCard.removeItem(-120,5);
+        shopCard.removeItem(100,5);
 
         shopCard.removeAll(300,"Iphone");
         shopCard.removeAll(-290,"Fairy tales");

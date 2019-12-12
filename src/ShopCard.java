@@ -5,10 +5,11 @@ import java.util.regex.Pattern;
 
 public class ShopCard {
     private Store store = new Store();
-    private List<User> users = FileParser.parseUsers();
+    private List<User> users;
     private HashMap<User, Card> userCard = new HashMap<>();
 
     public ShopCard(){
+        users = FileParser.parseUsers();
         initUserCart();
     }
 
@@ -19,80 +20,51 @@ public class ShopCard {
     }
 
     public void addItem(long userId, long itemId) {
-        int count = 0;
+        try {
+            for (int j = 0; j < store.getProducts().size(); j++) {
+                if (store.getProducts().get(j).getId() == itemId){
+                    userCard.get(searchUser(userId)).getItems().add(new ItemCart(store.getProducts().get(j)));
+                    break;
+                }
+            }
+        }catch (NullPointerException npe) { }
 
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == userId ){
-                count = i;
-                break;
-            }
-            if (users.size() < userId || 0 > userId){
-                System.out.println("userId " + userId + " doesn't exist\n");
-                break;
-            }
+        if (users.size() < userId || 0 > userId) {
+            System.out.println("userId " + userId + " doesn't exist\n");
         }
 
-        for (int j = 0; j < store.getProducts().size(); j++) {
-            if (store.getProducts().get(j).getId() == itemId){
-                userCard.get(users.get((count))).getItems().add(new ItemCart(store.getProducts().get(j)));
-                break;
-            }
-
-            if (store.getProducts().size() < itemId || 0 > itemId) {
-                System.out.println("itemId " + itemId + " doesn't exist\n");
-                break;
-            }
+        if (store.getProducts().size() < itemId || 0 > itemId) {
+            System.out.println("itemId " + itemId + " doesn't exist\n");
         }
     }
 
     public void removeItem(long userId, long positionId) {
-        int count = 0;
-
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == userId) {
-                count = i;
-                break;
+        try{
+            for (int j = 0; j < userCard.get(searchUser(userId)).getItems().size(); j++) {
+                if( userCard.get(searchUser(userId)).getItems().get(j).getPositionId() == positionId) {
+                    userCard.get(searchUser(userId)).getItems().remove(j);
+                    break;
+                }
             }
+        }catch (NullPointerException npe) {}
 
-            if (users.size() < userId || 0 > userId){
-                System.out.println("userId " + userId + " doesn't exist\n");
-                break;
-            }
-        }
-
-        for (int j = 0; j < userCard.get(users.get(count)).getItems().size(); j++) {
-            if( userCard.get(users.get(count)).getItems().get(j).getPositionId() == positionId) {
-                userCard.get(users.get(count)).getItems().remove(j);
-                break;
-            }
+        if (users.size() < userId || 0 > userId) {
+            System.out.println("userId " + userId + " doesn't exist\n");
         }
     }
 
     public void removeAll(long userId,String name) {
-        int count = 0;
+        try{
+            for (int j = 0; j < userCard.get(searchUser(userId)).getItems().size(); j++) {
+                if (setRegEx(name)) {
+                    userCard.get(searchUser(userId)).getItems().remove(j);
+                }
+            }
+        }catch (NullPointerException npe) {}
 
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId() == userId) {
-                count = i;
-                break;
-            }
-            if (users.size() < userId || 0 > userId){
-                System.out.println("userId " + userId + " doesn't exist\n");
-                break;
-            }
+        if (users.size() < userId || 0 > userId) {
+            System.out.println("userId " + userId + " doesn't exist\n");
         }
-
-        for (int j = 0; j < userCard.get(users.get(count)).getItems().size(); j++) {
-            if (setRegEx(name)) {
-                userCard.get(users.get(count)).getItems().remove(j);
-            }
-        }
-    }
-
-    public boolean setRegEx(String name) {
-        Pattern pattern = Pattern.compile("[A-Z]{1}[a-z]{1,}\\s{0,1}[A-Z]{0,}[a-z]{0,10}");
-        Matcher matcher = pattern.matcher(name);
-        return matcher.matches();
     }
 
     public void displayAllUsers() {
@@ -112,35 +84,49 @@ public class ShopCard {
     }
 
     public void displayUser(long userId) {
-        for (int i = 0; i < users.size(); i++) {
-            if(users.get(i).getId() == userId) {
-                System.out.println(users.get(i).toString() + "\n----------------\n");
-                break;
-            }
-
-            if (users.size() < userId || 0 > userId) {
-                System.out.println("userId " + userId + " doesn't exist\n");
-                break;
-            }
+        try {
+            System.out.println(searchUser(userId).toString() + "\n----------------\n");
+            displayCard(userId);
+        }catch (NullPointerException npe) {
 
         }
-        displayCard(userId);
+        if (users.size() < userId || 0 > userId) {
+            System.out.println("userId " + userId + " doesn't exist\n");
+        }
     }
 
     public void displayCard(long userId) {
         for (int i = 0; i < userCard.values().size(); i++) {
             if (users.get(i).getId() == userId) {
                 for (int j = 0; j < userCard.get(users.get(i)).getItems().size(); j++) {
-                    System.out.println(userCard.get(users.get(i)).getItems().get(j).toString() + " "
-                            + userCard.get(users.get(i)).getItems().get(j).getItem().toString());
+                    System.out.println(userCard.get(users.get(i)).getItems().get(j).printPositionId() +
+                              " " + userCard.get(users.get(i)).getItems().get(j).getItem().toString());
                 }
             }
-            if (users.size() < userId || 0 > userId) {
+        }
+
+        if (users.size() < userId || 0 > userId) {
                 System.out.println("userId " + userId + " doesn't exist\n");
+            }
+        System.out.println("******************************************************");
+    }
+
+    public User searchUser(long userId) {
+        User user = null;
+
+        for (int i = 0; i < users.size(); i++) {
+            if (users.get(i).getId() == userId) {
+                user = users.get(i);
                 break;
             }
         }
-        System.out.println("******************************************************");
+        return user;
+    }
+
+    public boolean setRegEx(String name) {
+        Pattern pattern = Pattern.compile("[A-Z]{1}[a-z]{1,}\\s{0,1}[A-Z]{0,}[a-z]{0,10}");
+        Matcher matcher = pattern.matcher(name);
+        return matcher.matches();
     }
 }
 

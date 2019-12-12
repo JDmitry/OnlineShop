@@ -6,16 +6,19 @@ import java.util.List;
 
 public class FileParser {
     public static List<User> parseUsers() {
+        String id = null, fName = null, lName = null;
         List<User> userList = new ArrayList<>();
 
         try ( BufferedReader scanner = new BufferedReader((new FileReader("res/users.txt")))) {
             String currentLine;
             while ((currentLine = scanner.readLine()) != null){
                 String[] userData = currentLine.split("\t");
-                userList.add(new User(Integer.parseInt(userData[0]), userData[1], userData[2]));
+                userList.add(new User(Integer.parseInt(userData[0]), userData[1],userData[2]));
             }
-        } catch (IOException e) {
+        } catch (IOException ioe) {
             System.out.println("This file doesn't exist");
+        } catch (ArrayIndexOutOfBoundsException arr) {
+
         }
         return userList;
     }

@@ -16,8 +16,7 @@ public class ItemCart {
         return positionId;
     }
 
-    @Override
-    public String toString() {
-        return "PositionId: " + positionId + " - ";
+    public String printPositionId(){
+       return "PositionId: " + positionId + " - ";
     }
 }
