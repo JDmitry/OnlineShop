@@ -1,12 +1,12 @@
 1	30.0	Red pencil	11
 2	40.0	Black pencil	11	
 3	50.0	Good shirt	14	
-4	30.0	Fairy tales	12	
-5	40.0	Bad shirt	14	
+4	30.0	Fairy tales	12
+5	40.0	Bad shirt	14
 6	50.0	Sonnets	12	
-7	40.0	Iphone	13	
+7	40.0	Iphone	13
 8	50.0	Bible	12	
 9	40.0	Macbook	13	
 10	50.0	Stas Michaylov	10	
-11	40.0	Fillip Kirkoroww	10	
+11	40.0	Fillip Kirkoroww	10
 12	50.0	Dexp Ixion 	13	

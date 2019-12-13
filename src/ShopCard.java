@@ -1,3 +1,4 @@
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -20,16 +21,10 @@ public class ShopCard {
     }
 
     public void addItem(long userId, long itemId) {
-        try {
-            for (int j = 0; j < store.getProducts().size(); j++) {
-                if (store.getProducts().get(j).getId() == itemId) {
-                    userCard.get(searchUser(userId)).getItems().add(new ItemCart(store.getProducts().get(j)));
-                    break;
-                }
-            }
-        } catch (NullPointerException npe) {
-            if (users.size() < userId || 0 > userId) {
-                System.out.println("userId " + userId + " doesn't exist\n");
+        for (int i = 0; i < store.getProducts().size(); i++) {
+            if (store.getProducts().get(i).getId() == itemId && searchUser(userId) != null) {
+                userCard.get(searchUser(userId)).getItems().add(new ItemCart(store.getProducts().get(i)));
+                break;
             }
         }
 
@@ -39,30 +34,21 @@ public class ShopCard {
     }
 
     public void removeItem(long userId, long positionId) {
-        try{
+        if (searchUser(userId) != null) {
             for (int i = 0; i < userCard.get(searchUser(userId)).getItems().size(); i++) {
                 if( userCard.get(searchUser(userId)).getItems().get(i).getPositionId() == positionId) {
                     userCard.get(searchUser(userId)).getItems().remove(i);
                     break;
                 }
             }
-        }catch (NullPointerException npe) {
-            if (users.size() < userId || 0 > userId) {
-                System.out.println("userId " + userId + " doesn't exist\n");
-            }
         }
     }
 
-    public void removeAll(long userId,String name) {
-        try {
-            for (int j = 0; j < userCard.get(searchUser(userId)).getItems().size(); j++) {
-                if (setRegEx(name)) {
-                    userCard.get(searchUser(userId)).getItems().remove(j);
-                }
-            }
-        } catch (NullPointerException npe) {
-            if (users.size() < userId || 0 > userId) {
-                System.out.println("userId " + userId + " doesn't exist\n");
+    public void removeAll(long userId, String name) {
+        if (searchUser(userId) != null) {
+            for (int i = 0; i < userCard.get(searchUser(userId)).getItems().size(); i++) {
+                if (setRegEx(name))
+                userCard.get(searchUser(userId)).getItems().remove(i);
             }
         }
     }
@@ -84,13 +70,9 @@ public class ShopCard {
     }
 
     public void displayUser(long userId) {
-        try {
+        if (searchUser(userId) != null) {
             System.out.println(searchUser(userId).toString() + "\n----------------\n");
             displayCard(userId);
-        } catch (NullPointerException npe) {
-            if (users.size() < userId || 0 > userId) {
-                System.out.println("userId " + userId + " doesn't exist\n");
-            }
         }
     }
 
@@ -103,10 +85,6 @@ public class ShopCard {
                 }
             }
         }
-
-        if (users.size() < userId || 0 > userId) {
-            System.out.println("userId " + userId + " doesn't exist\n");
-        }
         System.out.println("******************************************************");
     }
 
@@ -117,13 +95,18 @@ public class ShopCard {
             if (value.getId() == userId) {
                 user = value;
                 break;
+            } else {
+                if (users.size() < userId || 0 > userId) {
+                    System.out.println("userId " + userId + " doesn't exist\n");
+                    break;
+                }
             }
         }
         return user;
     }
 
     public boolean setRegEx(String name) {
-        Pattern pattern = Pattern.compile("^[A-Z]{1}[a-z]{1,}\\s{0,1}[A-Z]{0,}[a-z]{0,10}$");
+        Pattern pattern = Pattern.compile("[A-Z]{0,1}[a-z]{1,}\\s{0,1}[A-Z]{0,}[a-z]{0,10}$");
         Matcher matcher = pattern.matcher(name);
         return matcher.matches();
     }

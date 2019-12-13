@@ -13,11 +13,7 @@ public class FileParser {
             String currentLine;
             while ((currentLine = scanner.readLine()) != null) {
                 String[] userData = currentLine.split("\t");
-                if (userData.length < numberOfUsers) {
-                    String[] arr = new String[numberOfUsers];
-                    System.arraycopy(userData,0,arr,0,2);
-                    userList.add(new User(Integer.parseInt(arr[0]), arr[1], arr[2]));
-                } else {
+                if (userData.length == numberOfUsers) {
                     userList.add(new User(Integer.parseInt(userData[0]), userData[1], userData[2]));
                 }
             }
@@ -28,13 +24,16 @@ public class FileParser {
     }
 
     public static List<Item> parseItems() {
+        final int  numberOfItems = 4;
         List<Item> itemList = new ArrayList<>();
 
         try ( BufferedReader scanner = new BufferedReader((new FileReader("res/items.txt")))) {
             String currentLine;
             while ((currentLine = scanner.readLine()) != null) {
                 String[] userData = currentLine.split("\t");
-                itemList.add(new Item(Integer.parseInt(userData[0]), Double.parseDouble(userData[1]), userData[2], userData[3]));
+                if (userData.length == numberOfItems) {
+                    itemList.add(new Item(Integer.parseInt(userData[0]), Double.parseDouble(userData[1]), userData[2], userData[3]));
+                }
             }
         } catch (IOException e) {
             System.out.println("This file doesn't exist");
