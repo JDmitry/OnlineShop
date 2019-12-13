@@ -1,5 +1,5 @@
 1	Fill
 2	John	Goodman	
-3	John
-4	Ivan	Reyan	
+3	John	Miller
+4	Ivan
 5	Tihon	Tihoy	

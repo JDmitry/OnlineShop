@@ -36,19 +36,19 @@ public class Main {
 
         System.out.println("................CheckExceptions.............\n");
 
-        shopCard.addItem(6,2);
-        shopCard.addItem(-5,2);
-        shopCard.addItem(4,-10);
-        shopCard.addItem(2,30);
+        shopCard.addItem(600333,2);
+        shopCard.addItem(-5004444,2);
+        shopCard.addItem(4,-10006666);
+        shopCard.addItem(2,30008888);
 
-        shopCard.removeItem(100,2);
-        shopCard.removeItem(100,5);
+        shopCard.removeItem(10000009,2);
+        shopCard.removeItem(-10000111,5);
 
-        shopCard.removeAll(300,"Iphone");
-        shopCard.removeAll(-290,"Fairy tales");
+        shopCard.removeAll(30000005,"Iphone");
+        shopCard.removeAll(-29000004,"Fairy tales");
 
-        shopCard.displayUser(2000);
-        shopCard.displayUser(-33434);
+        shopCard.displayUser(2000000001);
+        shopCard.displayUser(-334340002);
 
         System.out.println("..............Removing................\n");
 

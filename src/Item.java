@@ -4,7 +4,6 @@ public class Item {
     private String name;
     private ItemType type;
 
-
     public Item(long itemId, double price, String name, String code) {
         this.itemId = itemId;
         this.price = price;
