@@ -66,12 +66,10 @@ public class Main {
 
         System.out.println(".....................RemovingAll......................\n");
 
-        shopCard.removeAll(4,"Black pecil");
-        shopCard.removeAll(5,"Ipone");
 
-        shopCard.displayUser(1);
-        shopCard.displayUser(2);
-        shopCard.displayUser(3);
+        shopCard.removeAll(4,"Black pencil");
+        shopCard.removeAll(5,"Iphone");
+
         shopCard.displayUser(4);
         shopCard.displayUser(5);
     }

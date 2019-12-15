@@ -15,6 +15,10 @@ public class Item {
         return itemId;
     }
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return itemId + ": " + name + " - " + price + " - " + type;

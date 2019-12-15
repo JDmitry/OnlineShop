@@ -1,4 +1,5 @@
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -46,10 +47,7 @@ public class ShopCard {
 
     public void removeAll(long userId, String name) {
         if (searchUser(userId) != null) {
-            for (int i = 0; i < userCard.get(searchUser(userId)).getItems().size(); i++) {
-                if (setRegEx(name))
-                userCard.get(searchUser(userId)).getItems().remove(i);
-            }
+            userCard.get(searchUser(userId)).getItems().removeIf(itemCart -> itemCart.getItem().getName().equals(name));
         }
     }
 
@@ -103,12 +101,6 @@ public class ShopCard {
             }
         }
         return user;
-    }
-
-    public boolean setRegEx(String name) {
-        Pattern pattern = Pattern.compile("[A-Z]{0,1}[a-z]{1,}\\s{0,1}[A-Z]{0,}[a-z]{0,10}$");
-        Matcher matcher = pattern.matcher(name);
-        return matcher.matches();
     }
 }
 
