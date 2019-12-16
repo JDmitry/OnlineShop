@@ -91,11 +91,14 @@ public class ShopCard {
     }
 
     public void displayCard(long userId) {
-        for (int i = 0; i < userCard.values().size(); i++) {
-            if (users.get(i).getId() == userId) {
-                for (int j = 0; j < userCard.get(users.get(i)).getItems().size(); j++) {
-                    System.out.println(userCard.get(users.get(i)).getItems().get(j).printPositionId() +
-                              " " + userCard.get(users.get(i)).getItems().get(j).getItem().toString());
+        User user = searchUser(userId);
+        if (user != null) {
+            for (int i = 0; i < userCard.values().size(); i++) {
+                if (users.get(i).getId() == userId) {
+                    for (int j = 0; j < userCard.get(users.get(i)).getItems().size(); j++) {
+                        System.out.println(userCard.get(users.get(i)).getItems().get(j).printPositionId() +
+                                " " + userCard.get(users.get(i)).getItems().get(j).getItem().toString());
+                    }
                 }
             }
         }
