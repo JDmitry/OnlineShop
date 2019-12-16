@@ -69,7 +69,10 @@ public class Main {
 
         shopCard.removeAll(4,"Black pencil");
         shopCard.removeAll(5,"Iphone");
+        shopCard.removeAll(3,"Bible");
 
+
+        shopCard.displayUser(3);
         shopCard.displayUser(4);
         shopCard.displayUser(5);
     }
