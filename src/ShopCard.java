@@ -27,13 +27,13 @@ public class ShopCard {
             return;
         }
 
-        if (item == null) {
-            System.out.println("itemId " + itemId + " doesn't exist");
+        if (user == null) {
+            System.out.println("userId " + userId + " doesn't exist");
             return;
         }
 
-        if (user == null) {
-            System.out.println("userId " + userId + " doesn't exist");
+        if (item == null) {
+            System.out.println("itemId " + itemId + " doesn't exist");
             return;
         }
 
@@ -43,31 +43,23 @@ public class ShopCard {
     public void removeItem(long userId, long positionId) {
         User user = searchUser(userId);
 
-        if (userCard.size() == 0) {
-            System.out.println("The cart is empty\n");
-            return;
-        }
-
         if (user == null) {
             System.out.println("userId " + userId + " doesn't exist");
             return;
         }
 
-        for (ItemCart itemCart: userCard.get(user).getItems()) {
-            if (itemCart.getPositionId() == positionId) {
-                userCard.get(user).getItems().remove(itemCart);
-                return;
-            }
+        ItemCart itemCart = searchItemCart(user, positionId);
+
+        if (itemCart == null) {
+            System.out.println("positionId " + positionId + " doesn't exist");
+            return;
         }
+
+        userCard.get(user).getItems().remove(itemCart);
     }
 
     public void removeAll(long userId, String name) {
         User user = searchUser(userId);
-
-        if (userCard.size() == 0) {
-            System.out.println("The cart is empty\n");
-            return;
-        }
 
         if (user != null) {
             userCard.get(user).getItems().removeIf(itemCart -> itemCart.getItem().getName().equals(name));
@@ -106,11 +98,6 @@ public class ShopCard {
     public void displayUser(long userId) {
         User user = searchUser(userId);
 
-        if (users.size() == 0) {
-            System.out.println("The list of users is empty\n");
-            return;
-        }
-
         if (user != null) {
             System.out.println(user.toString() + "\n----------------\n");
             displayCard(userId);
@@ -122,17 +109,13 @@ public class ShopCard {
     public void displayCard(long userId) {
         User user = searchUser(userId);
 
-        if (userCard.size() == 0) {
-            System.out.println("The list is empty\n");
-        }
-
         if (user == null) {
             System.out.println("userId " + userId + " doesn't exist");
             return;
         }
 
         if (user.getId() == userId) {
-            for (ItemCart itemCart :userCard.get(user).getItems()) {
+            for (ItemCart itemCart : userCard.get(user).getItems()) {
                 System.out.println(itemCart.printPositionId() + " " + itemCart.getItem().toString());
             }
         }
@@ -154,14 +137,18 @@ public class ShopCard {
     }
 
     public Item searchItem(long itemId) {
-        if (userCard.values().size() == 0) {
-            System.out.println("The card is empty");
-            return null;
-        }
-
         for (Item item: store.getProducts()) {
             if (item.getId() == itemId) {
                 return item;
+            }
+        }
+        return null;
+    }
+
+    public ItemCart searchItemCart(User user, long positionId) {
+        for (ItemCart itemCart : userCard.get(user).getItems()) {
+            if (itemCart.getPositionId() == positionId) {
+                return itemCart;
             }
         }
         return null;

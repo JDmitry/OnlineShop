@@ -44,6 +44,9 @@ public class Main {
         shopCard.removeItem(10000009,2);
         shopCard.removeItem(-10000111,5);
 
+        shopCard.removeItem(1,45678);
+        shopCard.removeItem(2,-463475647);
+
         shopCard.removeAll(30000005,"Iphone");
         shopCard.removeAll(-29000004,"Fairy tales");
 
@@ -56,7 +59,7 @@ public class Main {
         shopCard.removeItem(2,4);
         shopCard.removeItem(3,7);
         shopCard.removeItem(4,9);
-        shopCard.removeItem(5,12);
+
 
         shopCard.displayUser(1);
         shopCard.displayUser(2);
